@@ -1,0 +1,18 @@
+{
+  "id": "{{cookiecutter.plugin_name}}",
+  "name": "{{cookiecutter.plugin_display_name}}",
+  "version": "0.1.0",
+  "description": "{{cookiecutter.plugin_description}}",
+  "author": "{{cookiecutter.author}}",
+  "language": "python",
+  "python_version": ">={{cookiecutter.python_version}}",
+  "entry_point": "{{cookiecutter.plugin_name}}.cli:main",
+  "hooks": {
+    "SessionStart": "hooks/session_start.py",
+    "PostToolUse": "hooks/post_tool_use.py",
+    "Stop": "hooks/stop.py"
+  },
+  "capabilities": ["hooks", "cli"],
+  "data_dir": "~/.local/share/{{cookiecutter.plugin_name}}",
+  "log_dir": "~/.local/state/{{cookiecutter.plugin_name}}/logs"
+}
