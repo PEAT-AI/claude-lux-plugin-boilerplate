@@ -24,7 +24,7 @@ from pathlib import Path
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from hooks._common import (
+from {{cookiecutter.plugin_name}}.hooks import (
     get_project_from_cwd,
     read_hook_input,
     setup_logging,

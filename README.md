@@ -8,9 +8,8 @@ A [Cookiecutter](https://cookiecutter.readthedocs.io/) template for creating Cla
 - **Claude Code hooks**: SessionStart, PostToolUse, Stop hooks out of the box
 - **CLI framework**: Click-based command-line interface
 - **XDG-compliant paths**: Data stored in standard locations
-- **Secrets handling**: Environment variables + file fallback
-- **Auto-registration**: One-command setup with Claude Code
-- **Testing**: pytest + coverage ready
+- **Auto-registration**: One-command setup with Claude Code (with backup)
+- **Testing**: pytest + ruff ready
 - **CI/CD**: GitHub Actions workflow included
 
 ## Quick Start
@@ -18,6 +17,9 @@ A [Cookiecutter](https://cookiecutter.readthedocs.io/) template for creating Cla
 ```bash
 # Install cookiecutter if you haven't
 pip install cookiecutter
+
+# Or use uvx (no install needed)
+uvx cookiecutter gh:PEAT-AI/claude-lux-plugin-boilerplate
 
 # Generate a new plugin
 cookiecutter gh:PEAT-AI/claude-lux-plugin-boilerplate
@@ -33,8 +35,6 @@ You'll be prompted for:
 | `author` | Author name | `PEAT-AI` |
 | `author_email` | Author email | `dev@peat.ai` |
 | `python_version` | Minimum Python version | `3.10` |
-| `include_hooks` | Include Claude Code hooks | `true` |
-| `include_api_client` | Include HTTP client module | `true` |
 
 ## After Generation
 
@@ -62,16 +62,14 @@ my_plugin/
 │   ├── cli.py           # Click CLI
 │   ├── config.py        # Configuration
 │   ├── paths.py         # XDG paths
-│   └── client.py        # HTTP client
+│   └── hooks.py         # Hook utilities
 ├── hooks/               # Claude Code hooks
 │   ├── session_start.py
 │   ├── post_tool_use.py
 │   └── stop.py
 ├── tests/               # Test suite
-├── scripts/             # Utilities
+├── scripts/
 │   └── register.py      # Claude Code registration
-├── bin/
-│   └── run              # Entry point wrapper
 ├── pyproject.toml
 ├── plugin.json          # Plugin manifest
 ├── Makefile

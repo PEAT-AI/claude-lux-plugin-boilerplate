@@ -16,7 +16,7 @@ make install
 This will:
 1. Create a virtual environment
 2. Install dependencies
-3. Register hooks with Claude Code
+3. Backup existing settings and register hooks with Claude Code
 
 ## Usage
 
@@ -25,12 +25,6 @@ This will:
 ```bash
 # Show plugin status
 {{cookiecutter.plugin_name}} status
-
-# Echo a message (example command)
-{{cookiecutter.plugin_name}} echo "Hello, Claude!"
-
-# Test API connection (if configured)
-{{cookiecutter.plugin_name}} test-connection
 ```
 
 ### Hooks
@@ -57,19 +51,9 @@ Available settings:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `{{cookiecutter.plugin_name | upper}}_API_KEY` | API key (if needed) | - |
 | `{{cookiecutter.plugin_name | upper}}_VERBOSE` | Enable verbose logging | `false` |
 | `{{cookiecutter.plugin_name | upper}}_DATA_DIR` | Override data directory | `~/.local/share/{{cookiecutter.plugin_name}}` |
 | `{{cookiecutter.plugin_name | upper}}_LOG_DIR` | Override log directory | `~/.local/state/{{cookiecutter.plugin_name}}/logs` |
-
-### Secrets File (Alternative)
-
-You can also store API keys in `~/.claude/secrets/KEYS_TOKENS_CLAUDE.md`:
-
-```markdown
-## {{cookiecutter.plugin_display_name}}
-API Key: your-key-here
-```
 
 ## Development
 
@@ -102,14 +86,13 @@ make clean
 │   ├── cli.py                       # CLI commands
 │   ├── config.py                    # Configuration loading
 │   ├── paths.py                     # XDG path utilities
-│   └── client.py                    # API client (optional)
+│   └── hooks.py                     # Hook utilities
 ├── hooks/                           # Claude Code hooks
 │   ├── session_start.py
 │   ├── post_tool_use.py
 │   └── stop.py
 ├── tests/                           # Test suite
-├── scripts/                         # Utility scripts
-└── bin/                             # Entry point wrapper
+└── scripts/                         # Utility scripts
 ```
 
 ## License

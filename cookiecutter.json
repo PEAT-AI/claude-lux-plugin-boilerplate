@@ -5,7 +5,5 @@
   "author": "PEAT-AI",
   "author_email": "dev@peat.ai",
   "python_version": "3.10",
-  "include_hooks": true,
-  "include_api_client": true,
   "_copy_without_render": [".github"]
 }

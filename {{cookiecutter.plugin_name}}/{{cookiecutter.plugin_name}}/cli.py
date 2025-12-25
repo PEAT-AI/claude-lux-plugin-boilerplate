@@ -29,39 +29,5 @@ def status(ctx: click.Context) -> None:
     click.echo(f"Config loaded: {config is not None}")
 
 
-@main.command()
-@click.argument("message")
-@click.pass_context
-def echo(ctx: click.Context, message: str) -> None:
-    """Echo a message (example command)."""
-    verbose = ctx.obj.get("verbose", False)
-    if verbose:
-        click.echo(f"[verbose] Echoing message...")
-    click.echo(message)
-
-
-@main.command()
-@click.pass_context
-def test_connection(ctx: click.Context) -> None:
-    """Test API connection (if configured)."""
-    {%- if cookiecutter.include_api_client %}
-    from .client import test_api_connection
-    from .config import load_config
-
-    config = load_config()
-    if not config.get("api_key"):
-        click.echo("No API key configured. Set it in .env or environment variables.")
-        raise SystemExit(1)
-
-    if test_api_connection(config["api_key"]):
-        click.echo("API connection successful!")
-    else:
-        click.echo("API connection failed.")
-        raise SystemExit(1)
-    {%- else %}
-    click.echo("API client not included in this plugin.")
-    {%- endif %}
-
-
 if __name__ == "__main__":
     main()

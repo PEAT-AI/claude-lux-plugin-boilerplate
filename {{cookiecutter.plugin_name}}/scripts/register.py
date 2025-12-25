@@ -7,13 +7,35 @@ Run it with --unregister to remove the hooks.
 
 import argparse
 import json
+import shutil
 import sys
+from datetime import datetime
 from pathlib import Path
 
 
 def get_settings_path() -> Path:
     """Get the Claude Code settings path."""
     return Path.home() / ".claude" / "settings.json"
+
+
+def backup_settings() -> Path | None:
+    """Create a backup of settings.json before modifying.
+
+    Returns:
+        Path to backup file, or None if no settings to backup
+    """
+    settings_path = get_settings_path()
+    if not settings_path.exists():
+        return None
+
+    backup_dir = settings_path.parent / "backups"
+    backup_dir.mkdir(exist_ok=True)
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_path = backup_dir / f"settings.{timestamp}.json"
+    shutil.copy2(settings_path, backup_path)
+
+    return backup_path
 
 
 def get_plugin_dir() -> Path:
@@ -48,6 +70,12 @@ def save_settings(settings: dict) -> None:
 def register() -> None:
     """Register plugin hooks with Claude Code."""
     manifest = load_plugin_manifest()
+
+    # Backup before modifying
+    backup_path = backup_settings()
+    if backup_path:
+        print(f"Backed up settings to: {backup_path}")
+
     settings = load_settings()
     plugin_dir = get_plugin_dir()
 

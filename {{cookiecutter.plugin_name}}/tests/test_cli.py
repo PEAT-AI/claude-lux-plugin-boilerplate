@@ -28,20 +28,3 @@ def test_status_command(mock_env):
     assert result.exit_code == 0
     assert "{{cookiecutter.plugin_display_name}}" in result.output
     assert "Data directory" in result.output
-
-
-def test_echo_command():
-    """Test the echo command."""
-    runner = CliRunner()
-    result = runner.invoke(main, ["echo", "hello world"])
-    assert result.exit_code == 0
-    assert "hello world" in result.output
-
-
-def test_echo_verbose():
-    """Test the echo command with verbose flag."""
-    runner = CliRunner()
-    result = runner.invoke(main, ["--verbose", "echo", "test"])
-    assert result.exit_code == 0
-    assert "[verbose]" in result.output
-    assert "test" in result.output
